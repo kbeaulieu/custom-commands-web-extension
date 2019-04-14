@@ -1,0 +1,12 @@
+# Node
+node_modules
+
+# Build
+dist
+
+# IDEs
+.idea
+*.iml
+
+# OS
+.DS_Store

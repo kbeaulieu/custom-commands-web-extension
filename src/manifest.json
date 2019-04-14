@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "custom-commands",
+  "version": "0.0.1",
+
+  "description": "Custom commands",
+
+  "icons": {
+    "48": "icons/cmd-512.png",
+    "96": "icons/cmd-512.png"
+  },
+
+  "background": {
+    "scripts": ["main.js"]
+  },
+
+  "commands": {
+    "search-with-google": {
+      "suggested_key": {
+        "default": "Alt+G"
+      },
+      "description": "Redo search with google."
+    }
+  },
+
+  "permissions": [
+    "tabs"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "custom-commands-web-extension",
+  "version": "0.0.1",
+  "main": "src/main.ts",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "./scripts/build.sh"
+  },
+  "devDependencies": {
+    "@types/firefox-webext-browser": "~67.0.0",
+    "typescript": "~3.4.3"
+  }
+}
