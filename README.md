@@ -10,5 +10,10 @@ A single Web Extension defining custom commands
 - Add support for Google Chrome
 
 ## Commands
-### Redo search with google
+### Redo search with google (`Alt+G`)
 Supports `duckduckgo.com` and `startpage.com`.
+
+## Future Commands
+- `Alt+C` Change current cookie store id for the default one (reopen current tab in a containerless tab).
+  [](https://gitlab.com/mjanetmars/switch-container/blob/master/switch_container.js)
+- `Ctrl+Alt+LeftClick` to open link in a new tab without container. Is `LeftClick` a valid key?

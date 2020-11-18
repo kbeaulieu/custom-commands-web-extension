@@ -5,11 +5,9 @@ import Tab = browser.tabs.Tab;
  **/
 
 browser.commands.onCommand.addListener(command => {
-    console.debug('listner');
     if (command == 'search-with-google') {
-        console.debug('search-with-google');
         console.debug('Command: search-with-google');
-        searchWithGoogle();
+        searchWithGoogle().catch(console.error);
     }
 });
 
@@ -23,32 +21,31 @@ const GOOGLE_SEARCH_URL = 'http://www.google.com/search?q=';
 
 interface QueryContext {
     tab: Tab,
-    query: string | null
+    query: string
 }
 
-function searchWithGoogle(): void {
-    getCurrentTab()
+function searchWithGoogle(): Promise<void> {
+    return getCurrentTab()
         .then((tab: Tab) => {
-            if (!tab.url) {
-                throw 'No URL! :/';
+            if (tab.url === undefined) {
+                throw 'Current Tab has no URL';
             }
+
             const query = getQueryBasedOnSearchEngine(new URL(tab.url));
+
             return { tab, query };
         })
         .then(({ query, tab }: QueryContext) => {
-            if (query === null) {
-                throw 'No query';
-            }
             if (tab.id === undefined) {
                 throw 'No tab id';
             }
+
             changeLocation(query, tab.id);
         });
 }
 
-function getQueryBasedOnSearchEngine(url: URL): string | null {
+function getQueryBasedOnSearchEngine(url: URL): string | never {
     let queryKey = null;
-
     switch (url.host) {
     case START_PAGE:
         queryKey = 'query';
@@ -58,7 +55,16 @@ function getQueryBasedOnSearchEngine(url: URL): string | null {
         break;
     }
 
-    return queryKey && url.searchParams.get(queryKey);
+    if (queryKey == null) {
+        throw `Search engine "${url.host}" not supported`;
+    }
+
+    const query = url.searchParams.get(queryKey);
+    if (query == null) {
+        throw `Query key "${queryKey}" in search engine "${url.host}" is null`;
+    }
+
+    return query;
 }
 
 function changeLocation(query: string, tabId: number): void {
